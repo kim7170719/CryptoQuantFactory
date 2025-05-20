@@ -1,0 +1,14 @@
+{
+  "welcome": "Welcome to CryptoQuantFactory!",
+  "start_cli": "Please use CLI or Web interface to start backtest/optimization/analysis.",
+  "error": "Error",
+  "strategy": "Strategy",
+  "data": "Data",
+  "run": "Run",
+  "result": "Result",
+  "summary": "Summary",
+  "equity_curve": "Equity Curve",
+  "final_equity": "Final Equity",
+  "max_drawdown": "Max Drawdown",
+  "sharpe": "Sharpe Ratio"
+}

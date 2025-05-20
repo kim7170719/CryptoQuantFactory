@@ -1,0 +1,14 @@
+{
+  "welcome": "CryptoQuantFactoryへようこそ！",
+  "start_cli": "CLIまたはWebインターフェースでバックテスト/最適化/分析を開始してください。",
+  "error": "エラー",
+  "strategy": "戦略",
+  "data": "データ",
+  "run": "実行",
+  "result": "結果",
+  "summary": "サマリー",
+  "equity_curve": "エクイティカーブ",
+  "final_equity": "最終資産",
+  "max_drawdown": "最大ドローダウン",
+  "sharpe": "シャープレシオ"
+}

@@ -1,0 +1,129 @@
+[v0.1.2] Web 介面美化與用戶體驗優化
+- 新增 interface/web_ui.py：美觀的 Streamlit Web 介面，支援多語言切換、策略選擇、圖形化回測
+- Web 介面左側可選語言（en/zh/ja/ko），主頁顯示多語言歡迎與說明
+- 策略選擇支援 MA、RSI、MACD、Bollinger Bands
+- 上傳數據後可一鍵回測並顯示績效摘要與資產曲線
+- README.md 同步更新 Web 介面用法、特性、版本日誌
+
+下一步將進行穩定性與擴展性提升（異常處理、日誌、測試覆蓋、CI/CD）。
+[v0.1.3] 穩定性與擴展性提升
+- 新增 logs/ 目錄，集中存放運行日誌
+- 新增 utils/logging/logger.py，支援 info/warning/error/debug 並寫入 logs/
+- 新增 utils/exception/exception.py，全局異常處理與自定義異常類
+- 新增 .github/workflows/python-app.yml，GitHub Actions 自動化測試與覆蓋率分析
+- README.md 同步更新日誌、異常、CI/CD、測試覆蓋率用法與版本日誌
+
+下一步將進行實盤安全與風控（API Key 加密、下單風控、實盤/模擬盤隔離等）。
+[v0.1.4] 實盤安全與風控
+- 新增 utils/security/crypto.py，API Key 加密存儲（Fernet對稱加密）
+- 新增 trading/risk_control.py，下單風控（單筆/日損/持倉限制）
+- 新增 trading/safe_trading.py，實盤/模擬盤隔離與安全下單
+- README.md 同步更新安全、風控、隔離用法與版本日誌
+
+下一步將進行文件與社群建設（多語言README、API文檔、FAQ、社群入口等）。
+[v0.1.5] 文件與社群建設
+- 新增 README.en.md（英文說明）、docs/api.md（API文檔）、docs/faq.md（FAQ）
+- README.md 同步更新多語言、API文檔、FAQ、社群入口
+
+下一步將進行插件系統、雲端部署、自動化排程等進階功能。
+[v0.1.6] 插件系統、雲端部署、自動化排程
+- 新增 plugins/ 目錄與 plugin_manager.py，支援用戶自定義策略/數據/分析插件
+- 新增 plugins/sample_strategy_plugin.py 插件範例
+- README.md 同步更新插件系統、雲端部署、自動化排程建議
+
+【全自動化完善計畫第一輪已全部完成】
+[v0.2.0] 效能分析與壓力測試
+- 新增 tests/performance/ 目錄
+- 新增 test_backtest_performance.py（大數據量回測效能測試）
+- 新增 profile_backtest.py（cProfile 效能分析）
+- 新增 memory_backtest.py（memory_profiler 記憶體分析）
+- README.md 同步更新效能分析、壓力測試用法與版本日誌
+
+下一步將進行兼容性修正與多平台自動測試。
+[v0.2.1] 兼容性修正與多平台自動測試
+- 新增 utils/compatibility/ 目錄，依賴檢查、Python 版本檢查、安全導入
+- 新增 tests/compatibility/test_compatibility.py 兼容性自動化測試
+- README.md 同步更新兼容性測試用法與版本日誌
+
+下一步將進行錯誤收集與回報系統。
+[v0.2.2] 錯誤收集與回報系統
+- 新增 utils/logging/error_reporter.py，錯誤日誌自動收集、可選匿名郵件回報
+- 新增 logs/error.log 集中存放錯誤日誌
+- 新增 tests/logs/test_error_reporter.py 錯誤收集自動化測試
+- README.md 同步更新錯誤收集與回報用法與版本日誌
+
+下一步將進行回歸測試與自動對比。
+[v0.2.3] 回歸測試與自動對比
+- 新增 tests/regression/test_regression_backtest.py 回歸測試，對比回測結果與歷史基準，異常自動報警
+- README.md 同步更新回歸測試用法與版本日誌
+
+下一步將進行所有骨架文件/模組的實際功能完善。
+[v0.3.0] 數據接口模組完善
+- ccxt_source.py：多交易所、多幣種、多時間框架K線拉取，異常處理
+- cmc_source.py：CoinMarketCap API拉取歷史K線，API Key配置
+- coingecko_source.py：CoinGecko API拉取歷史K線，多幣種、多時間框架
+- yahoo_source.py：Yahoo Finance拉取多幣種、多時間框架
+- okx_source.py/bybit_source.py：OKX/Bybit API拉取K線
+- cache.py：本地快取，避免重複拉取
+- README.md 同步更新數據接口模組用法與版本日誌
+
+下一步將進行策略模組完善。
+[v0.3.1] 策略模組完善
+- multifactor/momentum_value.py：動量+價值多因子策略，支援多因子自定義
+- arbitrage/triangular.py：三角套利策略，完善多幣種套利邏輯
+- arbitrage/calendar.py：跨期套利策略，完善合約套利邏輯
+- rl_dl/lstm.py：LSTM 策略，完善訓練、預測流程
+- rl_dl/dqn.py：DQN 策略，完善訓練、預測流程
+- README.md 同步更新策略模組用法與版本日誌
+
+下一步將進行回測引擎模組完善。
+[v0.3.2] 回測引擎模組完善
+- engine.py：單幣種回測，支援交易成本、滑點、資金管理
+- portfolio.py：多策略組合權重分配、績效合併
+- multi_asset_engine.py：多幣種同時回測，獨立/合併資金池
+- multi_timeframe_engine.py：多時間框架回測，主/輔信號融合
+- event_engine.py：事件驅動回測，支援自定義事件
+- slippage.py：多種滑點模型（固定、隨機）
+- capital_management.py：多種資金管理策略（定額、定比、最大槓桿）
+- README.md 同步更新回測引擎模組用法與版本日誌
+
+下一步將進行優化模組完善。
+[v0.3.3] 優化模組完善
+- optimizer.py：Optuna 參數優化，異常處理
+- overfit_test.py：Walk Forward 過擬合測試
+- grid_search.py：網格搜索優化
+- genetic.py：遺傳算法優化（骨架，需集成GA庫）
+- cross_validation.py：交叉驗證（骨架，需完善CV邏輯）
+- README.md 同步更新優化模組用法與版本日誌
+
+下一步將進行分析模組完善。
+[v0.3.4] 分析模組完善
+- report.py：回測績效摘要（最終資產、最大回撤、夏普比率）
+- plot.py：資產曲線可視化
+- metrics.py：Calmar、Sortino等績效指標
+- compare.py：多策略/多幣種績效對比圖
+- export.py：報告導出（Excel、CSV）
+- README.md 同步更新分析模組用法與版本日誌
+
+下一步將進行交易模組完善。
+[v0.3.5] 交易模組完善
+- paper_trading.py：模擬盤下單、持倉、歷史記錄
+- live_trading.py：實盤下單、查詢持倉，API對接
+- risk_control.py：下單風控（單筆/日損/持倉限制）
+- safe_trading.py：實盤/模擬盤隔離與安全下單
+- utils/security/crypto.py：API Key加密存儲，異常處理
+- README.md 同步更新交易模組用法與版本日誌
+
+下一步將進行插件系統完善。
+[v0.3.6] 插件系統完善
+- plugin_manager.py：插件加載、註冊、熱插拔、異常處理
+- sample_strategy_plugin.py：策略插件範例
+- README.md 同步更新插件系統用法與版本日誌
+
+下一步將進行 Web/CLI 介面完善。
+[v0.3.7] Web/CLI 介面完善
+- cli.py：多語言、策略選擇、數據上傳、回測、報告
+- web_ui.py：多語言、策略選擇、圖形化回測、績效報告
+- README.md 同步更新 Web/CLI 介面用法與版本日誌
+
+【全面完善計畫第二輪已全部完成】

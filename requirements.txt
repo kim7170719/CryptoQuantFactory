@@ -1,0 +1,9 @@
+pandas
+numpy
+matplotlib
+optuna
+ccxt
+yfinance
+requests
+streamlit
+scikit-learn

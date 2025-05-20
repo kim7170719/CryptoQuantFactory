@@ -1,0 +1,14 @@
+{
+  "welcome": "歡迎使用 CryptoQuantFactory!",
+  "start_cli": "請使用 CLI 或 Web 介面啟動回測/優化/分析。",
+  "error": "錯誤",
+  "strategy": "策略",
+  "data": "數據",
+  "run": "執行",
+  "result": "結果",
+  "summary": "摘要",
+  "equity_curve": "資產曲線",
+  "final_equity": "最終資產",
+  "max_drawdown": "最大回撤",
+  "sharpe": "夏普比率"
+}

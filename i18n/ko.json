@@ -1,0 +1,14 @@
+{
+  "welcome": "CryptoQuantFactory에 오신 것을 환영합니다!",
+  "start_cli": "CLI 또는 Web 인터페이스를 사용하여 백테스트/최적화/분석을 시작하세요.",
+  "error": "오류",
+  "strategy": "전략",
+  "data": "데이터",
+  "run": "실행",
+  "result": "결과",
+  "summary": "요약",
+  "equity_curve": "자산 곡선",
+  "final_equity": "최종 자산",
+  "max_drawdown": "최대 낙폭",
+  "sharpe": "샤프 비율"
+}
