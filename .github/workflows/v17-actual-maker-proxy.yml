@@ -1,0 +1,29 @@
+name: V17 Real L2 + trades conservative Maker proxy
+on:
+  push:
+    branches: [research/v17-actual-maker-fill-proxy]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  v17-actual-maker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install requests
+        run: pip install requests
+      - name: Test strict BBO and maker accounting
+        run: python -m unittest discover -s research/v17_maker_proxy -p test_v17.py -v
+      - name: Fetch actual Tardis book/trades and simulate conservative execution
+        run: python research/v17_maker_proxy/v17_maker_proxy.py --day 2025-08-01 --seconds 90 --out v17_maker_proxy_result.json
+      - name: Publish derived metrics only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v17-real-btc-eth-maker-proxy
+          path: v17_maker_proxy_result.json
+          if-no-files-found: ignore
