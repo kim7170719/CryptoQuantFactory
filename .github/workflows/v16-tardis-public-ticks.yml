@@ -1,0 +1,29 @@
+name: V16 Real BTC and ETH Binance Futures Tardis L2 and trades
+on:
+  push:
+    branches: [research/v16-tardis-free-l2-event-window]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  real-ticks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install packages
+        run: pip install requests
+      - name: Check event-time and book code
+        run: python -m unittest discover -s research/v16_tardis_real_ticks -p test_v16.py -v
+      - name: Stream free real L2 and trade ticks from Tardis
+        run: python research/v16_tardis_real_ticks/v16_tardis_first_minute.py --day 2025-08-01 --seconds 90 --out v16_real_ticks.json
+      - name: Upload derived data only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v16-btc-eth-real-l2-and-trades
+          path: v16_real_ticks.json
+          if-no-files-found: ignore
