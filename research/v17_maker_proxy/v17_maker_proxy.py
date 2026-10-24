@@ -102,13 +102,14 @@ def analyze(symbol,day,seconds):
     rows,tradesurl=fetch(symbol,day,"trades",seconds)
     book=book_series(bookrows)
     if len(book["times"])<10:raise ValueError("NO_CONTINUOUS_L2_BBO")
+    if book["bad_bbo"]>0:raise ValueError("INVALID_BBO_GROUPS_FOUND_"+str(book["bad_bbo"]))
     gaps=[y-x for x,y in zip(book["times"],book["times"][1:])]
     if gaps and max(gaps)>5_000_000:raise ValueError("BOOK_GAP_GT_5S")
     for b,a in zip(book["bids"],book["asks"]):
         if b>=a:raise ValueError("CROSSED_BOOK")
     results=[test_strategy(book,rows,symbol,c) for c in ("top","wide_1bp","wide_5bp","flow_1bp")]
     return {"symbol":symbol,"real_l2_rows":len(bookrows),"real_trade_rows":len(rows),
-     "real_bbo_groups":len(book["times"]),"valid_bbo_fraction_of_book_groups":1.0,
+     "real_bbo_groups":len(book["times"]),"invalid_bbo_groups":book["bad_bbo"],"valid_bbo_fraction_of_book_groups":round(len(book["times"])/(len(book["times"])+book["bad_bbo"]),8),
      "median_actual_spread_bps":round(statistics.median(1e4*(a-b)/((a+b)/2) for b,a in zip(book["bids"],book["asks"])),8),
      "source":{"l2":l2url,"trades":tradesurl},"simulation":results,
      "cash_benchmark_pnl_usdt":0,
