@@ -1,0 +1,29 @@
+name: V15 Real Binance BTC L2 Sample Audit
+on:
+  push:
+    branches: [research/v15-btc-l2-public-audit]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  real-l2-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install reader
+        run: pip install 'candlefeed[l2]>=0.3.6' pandas pyarrow
+      - name: Test fail-closed metric logic
+        run: python -m unittest discover -s research/v15_real_l2 -p 'test_v15.py' -v
+      - name: Download SHA-verified real Binance order book and audit
+        run: python research/v15_real_l2/v15_btc_public_l2.py --out v15_book_report.json --data /tmp/v15_l2
+      - name: Share derived results only (NEVER licensed raw data)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v15-btc-real-l2-audit-results
+          path: v15_book_report.json
+          if-no-files-found: ignore
