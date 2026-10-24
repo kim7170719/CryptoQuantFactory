@@ -1,0 +1,33 @@
+name: V18 Real BTC ETH Maker inventory netting (train/holdout)
+on:
+  push:
+    branches: [research/v18-inventory-netting-maker]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  real-l2-scenarios:
+    strategy:
+      fail-fast: false
+      matrix:
+        date: ['2024-04-01','2025-06-01','2025-08-01','2025-10-01']
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: pip install requests
+      - name: Validate accounting and fills
+        run: python -m unittest discover -s research/v18_inventory_netting -p 'test_v18.py' -v
+      - name: Evaluate all configs on genuine Binance L2 (no raw ticks saved)
+        run: python research/v18_inventory_netting/v18_inventory_netting.py --day ${{ matrix.date }} --seconds 90 --out v18_${{ matrix.date }}.json
+      - name: Export computed metrics only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v18-genuine-l2-results-${{ matrix.date }}
+          path: v18_${{ matrix.date }}.json
+          if-no-files-found: ignore
