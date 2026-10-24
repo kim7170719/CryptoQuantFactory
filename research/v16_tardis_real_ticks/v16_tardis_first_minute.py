@@ -30,7 +30,7 @@ def fetch(symbol,day,kind,seconds=90):
                 if last is not None and ts<last:raise ValueError("LOCAL_TIME_REVERSED")
                 if row["exchange"]!=VENUE or row["symbol"]!=symbol:raise ValueError("WRONG_MARKET")
                 last=ts;rows.append(row)
-                if len(rows)>=140000:raise ValueError("MAX_ROWS_CAP")
+                if len(rows)>=400000:raise ValueError("MAX_ROWS_CAP")
     if not rows:raise ValueError("EMPTY_FILE")
     return rows,url
 def book_series(rows):
