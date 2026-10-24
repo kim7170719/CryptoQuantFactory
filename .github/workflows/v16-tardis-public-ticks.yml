@@ -19,7 +19,7 @@ jobs:
       - name: Check event-time and book code
         run: python -m unittest discover -s research/v16_tardis_real_ticks -p test_v16.py -v
       - name: Stream free real L2 and trade ticks from Tardis
-        run: python research/v16_tardis_real_ticks/v16_tardis_first_minute.py --day 2025-08-01 --seconds 90 --out v16_real_ticks.json
+        run: python research/v16_tardis_real_ticks/v16_tardis_first_minute.py --day 2025-08-01 --seconds 20 --out v16_real_ticks.json
       - name: Upload derived data only
         if: always()
         uses: actions/upload-artifact@v4
