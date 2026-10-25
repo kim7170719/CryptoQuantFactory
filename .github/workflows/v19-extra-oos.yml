@@ -1,0 +1,33 @@
+name: V19 Untouched Extra OOS Real Binance L2
+on:
+  push:
+    branches: [research/v19-extra-untouched-holdout]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  extra-untouched:
+    strategy:
+      fail-fast: false
+      matrix:
+        date: ['2024-02-01','2024-07-01','2025-01-01','2025-09-01']
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependency
+        run: pip install requests
+      - name: Verify V19 controls
+        run: python -m unittest discover -s research/v19_toxicity -p 'test_v19.py' -v
+      - name: Run unchanged no-filter and seven toxicity rules
+        run: python research/v19_extra_holdout/v19_extra_holdout.py --day ${{ matrix.date }} --seconds 90 --out results_${{ matrix.date }}.json
+      - name: Upload derived metrics only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v19-extra-holdout-${{ matrix.date }}
+          path: results_${{ matrix.date }}.json
+          if-no-files-found: ignore
