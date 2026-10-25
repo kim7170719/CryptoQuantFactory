@@ -1,0 +1,29 @@
+name: V19 Ex-Ante 200ms Real L2 Toxicity OOS
+on:
+  push:
+    branches: [research/v19-ex-ante-l2-toxicity]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  real-l2-oos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 28
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: pip install requests
+      - name: Test causality and fill accounting
+        run: python -m unittest discover -s research/v19_toxicity -p 'test_v19.py' -v
+      - name: 4 real first-of-month days train then frozen holdout
+        run: python research/v19_toxicity/v19_toxicity_oos.py --seconds 90 --out v19_real_l2_oos_results.json
+      - name: Export derived results only, never licensed raw ticks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v19-ex-ante-real-l2-oos
+          path: v19_real_l2_oos_results.json
+          if-no-files-found: ignore
